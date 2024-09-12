@@ -1,0 +1,36 @@
+{% extends 'mailing/home.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+
+        <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:mailing_create' %}">Создать рассылку</a>
+
+        <div class="pb-4"></div>
+        {% for mailing in object_list %}
+        <div class="col-4">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ mailing.client }}</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-start">Текст рассылки: {{ mailing.message | slice:100 }}</p>
+                    <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
+                    <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
+                    <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
+                    <p class="text-start">Дата окончания рассылки: {{ mailing.end_date }}</p>
+                    <p class="text-start">Интервал рассылки: {{ mailing.interval }}</p>
+                    <p class="text-start">Статус рассылки: {{ mailing.status }}</p>
+                    <h1 class="card-title pricing-card-title"></h1>
+                    <div class="btn-group">
+                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'mailing:mailing_detail' mailing.pk %}"
+                           role="button">Подробно</a>
+                    </div>
+                </div>
+                <p class="card-footer"> Активность: {{ mailing.is_active }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

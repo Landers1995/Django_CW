@@ -1,0 +1,35 @@
+{% extends 'mailing/home.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-6">
+
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ mailing.client }}</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-start">Текст рассылки: {{ mailing.message | slice:100 }}</p>
+                    <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
+                    <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
+                    <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
+                    <p class="text-start">Дата окончания рассылки: {{ mailing.end_date }}</p>
+                    <p class="text-start">Интервал рассылки: {{ mailing.interval }}</p>
+                    <p class="text-start">Статус рассылки: {{ mailing.status }}</p>
+                    <h1 class="card-title pricing-card-title"></h1>
+                    <div class="btn-group">
+                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'mailing:mailing_edit' mailing.pk %}"
+                           role="button">Изменить</a>
+                        <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:mailing_delete' mailing.pk %}"
+                           role="button">Удалить</a>
+                        <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:mailing_list' %}"
+                           role="button">Назад</a>
+                    </div>
+                </div>
+                <p class="card-footer"> Активность: {{ mailing.is_active }}</p>
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

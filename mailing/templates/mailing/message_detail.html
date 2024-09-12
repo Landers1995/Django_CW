@@ -1,0 +1,26 @@
+{% extends 'mailing/home.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-6">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ message.title }}</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-start">Текст рассылки: {{ message.body | slice:100 }}</p>
+                    <h1 class="card-title pricing-card-title"></h1>
+                    <div class="btn-group">
+                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'mailing:message_edit' message.pk %}"
+                           role="button">Изменить</a>
+                        <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:message_delete' message.pk %}"
+                           role="button">Удалить</a>
+                        <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:message_list' %}"
+                           role="button">Назад</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
