@@ -108,9 +108,7 @@ class TryMailing(models.Model):
     SUCCESS = "success"
     FAIL = "fail"
     STATUSES = [(SUCCESS, "success"), (FAIL, "fail")]
-    last_try = models.DateTimeField(
-        auto_now_add=True, verbose_name="Дата последней попытки рассылки"
-    )
+    last_try = models.DateTimeField(auto_now_add=True, verbose_name="Дата последней попытки рассылки")
     status = models.CharField(choices=STATUSES, default=SUCCESS, verbose_name="Статус")
     response = models.TextField(**NULLABLE, verbose_name="Ответ")
     mailing = models.ForeignKey(

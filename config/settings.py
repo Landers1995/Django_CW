@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    "django_apscheduler",
     "mailing",
 ]
 
@@ -161,3 +162,6 @@ if CACHE_ENABLED:
             "LOCATION": os.getenv("LOCATION")
         }
     }
+
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 1  # Seconds
