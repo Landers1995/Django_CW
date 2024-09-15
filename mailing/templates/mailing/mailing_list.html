@@ -3,34 +3,74 @@
 {% block content %}
 <div class="container">
     <div class="row text-center">
-
         <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:mailing_create' %}">Создать рассылку</a>
-
-        <div class="pb-4"></div>
-        {% for mailing in object_list %}
-        <div class="col-4">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ mailing.client }}</h4>
-                </div>
-                <div class="card-body">
-                    <p class="text-start">Текст рассылки: {{ mailing.message | slice:100 }}</p>
-                    <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
-                    <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
-                    <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
-                    <p class="text-start">Дата окончания рассылки: {{ mailing.end_date }}</p>
-                    <p class="text-start">Интервал рассылки: {{ mailing.interval }}</p>
-                    <p class="text-start">Статус рассылки: {{ mailing.status }}</p>
-                    <h1 class="card-title pricing-card-title"></h1>
-                    <div class="btn-group">
-                        <a class="btn btn-sm btn-outline-secondary" href="{% url 'mailing:mailing_detail' mailing.pk %}"
-                           role="button">Подробно</a>
+        <div class="col-12">
+            <div class="pb-4"></div>
+            {% for mailing in object_list %}
+            <div class="col-4">
+                {% if mailing.is_active %}
+                <div class="card border-success mb-4">
+                    <div class="card-header text-success">
+                        <h4 class="my-0 font-weight-normal">{{ mailing.client }}</h4>
                     </div>
+                    <div class="card-body text">
+                        <p class="text-start">Текст рассылки: {{ mailing.message | slice:100 }}</p>
+                        <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
+                        <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
+                        <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
+                        <p class="text-start">Дата окончания рассылки: {{ mailing.end_date }}</p>
+                        <p class="text-start">Интервал рассылки: {{ mailing.interval }}</p>
+                        <p class="text-start">Статус рассылки: {{ mailing.status }}</p>
+                        <h1 class="card-title pricing-card-title"></h1>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'mailing:mailing_detail' mailing.pk %}"
+                               role="button">Подробно</a>
+                        </div>
+                        <a class="btn btn-sm btn-outline-warning" href="{% url 'mailing:toggle_activity' mailing.pk %}"
+                           role="button">Деактивировать</a>
+                    </div>
+                    <p class="card-footer text-success"> Активность: {{ mailing.is_active }}</p>
                 </div>
-                <p class="card-footer"> Активность: {{ mailing.is_active }}</p>
+                {% else %}
+                <div class="card border-warning mb-4">
+                    <div class="card-header text-warning">
+                        <h4 class="my-0 font-weight-normal">{{ mailing.client }}</h4>
+                    </div>
+                    <div class="card-body text">
+                        <p class="text-start">Текст рассылки: {{ mailing.message | slice:100 }}</p>
+                        <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
+                        <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
+                        <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
+                        <p class="text-start">Дата окончания рассылки: {{ mailing.end_date }}</p>
+                        <p class="text-start">Интервал рассылки: {{ mailing.interval }}</p>
+                        <p class="text-start">Статус рассылки: {{ mailing.status }}</p>
+                        <h1 class="card-title pricing-card-title"></h1>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-secondary"
+                               href="{% url 'mailing:mailing_detail' mailing.pk %}"
+                               role="button">Подробно</a>
+                        </div>
+                        <a class="btn btn-sm btn-outline-success" href="{% url 'mailing:toggle_activity' mailing.pk %}"
+                           role="button">Активировать</a>
+                    </div>
+                    <p class="card-footer text-warning"> Активность: {{ mailing.is_active }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <form method="POST" action="{% url 'mailing:call_custom_command' 1 %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Выполнить единичную рассылку</button>
+                </form>
+                <form method="POST" action="#">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Запустить автоматическкую рассылку</button>
+                </form>
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}

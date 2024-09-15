@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.core.management import call_command
 
 from mailing.forms import MailingForm, ClientForm, MessageForm
 from mailing.models import Mailing, Client, Message
@@ -140,3 +141,22 @@ class MessageDetailView(DetailView):
 class MessageDeleteView(DeleteView):
     model = Message
     success_url = reverse_lazy('mailing:message_list')
+
+
+def toggle_activity(request, pk):
+    mailing_item = get_object_or_404(Mailing, pk=pk)
+    if mailing_item.is_active:
+        mailing_item.is_active = False
+    else:
+        mailing_item.is_active = True
+
+    mailing_item.save()
+
+    return redirect(reverse('mailing:mailing_list'))
+
+
+def call_custom_command(request, command_id: int):
+    if request.method == 'POST':
+        if command_id == 1:
+            call_command('send_mail')
+    return redirect(reverse('mailing:mailing_list'))
