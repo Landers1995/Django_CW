@@ -3,12 +3,13 @@
 {% block content %}
 <div class="container">
     <div class="row text-center">
-
+        {% if user.is_authenticated %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:client_create' %}">Создать клиента</a>
-
+        {% endif %}
         <div class="pb-4"></div>
         {% for client in object_list %}
         <div class="col-4">
+
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{ client.first_name }} {{ client.second_name }} {{ client.third_name }}</h4>
@@ -22,6 +23,13 @@
                            role="button">Изменить</a>
                         <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:client_delete' client.pk %}"
                            role="button">Удалить</a>
+                        {% if client.is_active %}
+                        <a class="btn btn-sm btn-outline-warning" href="{% url 'mailing:toggle_activity_client' client.pk %}"
+                           role="button">Деактивировать</a>
+                        {% else %}
+                        <a class="btn btn-sm btn-outline-success" href="{% url 'mailing:toggle_activity_client' client.pk %}"
+                           role="button">Активировать</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

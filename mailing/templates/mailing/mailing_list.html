@@ -3,10 +3,14 @@
 {% block content %}
 <div class="container">
     <div class="row text-center">
+        {% if user.is_authenticated %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:mailing_create' %}">Создать рассылку</a>
-        <div class="col-12">
+        {% endif %}
+
             <div class="pb-4"></div>
+
             {% for mailing in object_list %}
+
             <div class="col-4">
                 {% if mailing.is_active %}
                 <div class="card border-success mb-4">
@@ -27,7 +31,7 @@
                                href="{% url 'mailing:mailing_detail' mailing.pk %}"
                                role="button">Подробно</a>
                         </div>
-                        <a class="btn btn-sm btn-outline-warning" href="{% url 'mailing:toggle_activity' mailing.pk %}"
+                        <a class="btn btn-sm btn-outline-warning" href="{% url 'mailing:toggle_activity_mailing' mailing.pk %}"
                            role="button">Деактивировать</a>
                     </div>
                     <p class="card-footer text-success"> Активность: {{ mailing.is_active }}</p>
@@ -51,15 +55,15 @@
                                href="{% url 'mailing:mailing_detail' mailing.pk %}"
                                role="button">Подробно</a>
                         </div>
-                        <a class="btn btn-sm btn-outline-success" href="{% url 'mailing:toggle_activity' mailing.pk %}"
+                        <a class="btn btn-sm btn-outline-success" href="{% url 'mailing:toggle_activity_mailing' mailing.pk %}"
                            role="button">Активировать</a>
                     </div>
                     <p class="card-footer text-warning"> Активность: {{ mailing.is_active }}</p>
                 </div>
                 {% endif %}
-                {% endfor %}
             </div>
-
+            {% endfor %}
+            {% if user.is_authenticated %}
             <div class="d-grid gap-2 col-6 mx-auto">
                 <form method="POST" action="{% url 'mailing:call_custom_command' 1 %}">
                     {% csrf_token %}
@@ -69,8 +73,9 @@
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary">Запустить автоматическкую рассылку</button>
                 </form>
+                {% endif %}
             </div>
-        </div>
+
     </div>
 </div>
 {% endblock %}

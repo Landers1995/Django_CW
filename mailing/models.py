@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {"blank": True, "null": True}
 
 
@@ -10,11 +12,8 @@ class Client(models.Model):
     second_name = models.CharField(max_length=50, verbose_name='Фамилия', help_text='Введите фамилию')
     third_name = models.CharField(max_length=50, verbose_name='Отчество', help_text='Введите отчество', **NULLABLE)
     comment = models.TextField(verbose_name='Комментарий', help_text='Введите комментарий', **NULLABLE)
-    # user = models.ForeignKey(
-    #     User,
-    #     on_delete=models.CASCADE,
-    #     verbose_name="Пользователь",
-    # )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Создал клиента", **NULLABLE)
+    is_active = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = "Клиент"
@@ -22,7 +21,8 @@ class Client(models.Model):
         ordering = ("email",)
         permissions = [
             ("can_view_clients", "can view clients"),
-            ("can_change_clients", "can change clients"),
+            ("can_edit_is_active", "can edit active clients"),
+
             ("can_delete_clients", "can delete clients"),
         ]
 
@@ -34,13 +34,7 @@ class Message(models.Model):
 
     title = models.CharField(max_length=50, verbose_name='Заголовок сообщения', help_text='Введите заголовок сообщения')
     body = models.TextField(verbose_name='Содержание сообщения', help_text='Введите содержание сообщения')
-    # owner = models.ForeignKey(
-    #     User,
-    #     on_delete=models.SET_NULL,
-    #     **NULLABLE,
-    #     related_name="Owner",
-    #     verbose_name="Пользователь",
-    # )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор сообщения", **NULLABLE)
 
     class Meta:
         verbose_name = "Сообщение"
@@ -83,21 +77,19 @@ class Mailing(models.Model):
     interval = models.CharField(choices=INTERVAL, default=DAY, verbose_name='Интервал рассылки')
     end_date = models.DateTimeField(**NULLABLE, verbose_name="Дата окончания рассылки")
     # auto_start = models.BooleanField(default=True, verbose_name="Автоматический старт")
-    #
-    # user = models.ForeignKey(
-    #     User, on_delete=models.CASCADE, verbose_name="Пользователь"
-    # )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор рассылки", **NULLABLE)
 
     class Meta:
         verbose_name = "Рассылка"
         verbose_name_plural = "Рассылки"
         ordering = ("interval",)
         permissions = [
+            ("can_view_mailing", "can view mailing"),
+            ("can_edit_is_active", "can edit active mailing"),
+
             ("can_change_mailing", "can change mailing"),
             ("can_delete_mailing", "can delete mailing"),
-            ("can_view_mailing", "can view mailing"),
             ("can_create_mailing", "can create mailing"),
-            ("can_switch_mailing", "can switch mailing"),
         ]
 
         def __str__(self):

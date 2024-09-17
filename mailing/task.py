@@ -1,10 +1,10 @@
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
-from mailing.models import Mailing, TryMailing
+from mailing.models import Mailing, TryMailing, Client
 
 import logging
 from django.conf import settings
-from apscheduler.schedulers.blocking import BlockingScheduler
+from apscheduler.schedulers.background import BackgroundScheduler, BlockingScheduler
 from apscheduler.triggers.cron import CronTrigger
 from django.core.management.base import BaseCommand
 from django_apscheduler.jobstores import DjangoJobStore
@@ -12,13 +12,14 @@ from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
 from django.core.management import BaseCommand
 #from mailing.task import send_mailing
+from mailing.utils import get_mailing_period_trigger
 
 
 def send_mailing():
     mailings = Mailing.objects.filter(is_active=True)
 
     for mailing in mailings:
-        emails_list = mailing.client.values_list('email', flat=True)
+        emails_list = mailing.client.filter(is_active=True).values_list('email', flat=True)
         try:
             send_mail(
                 subject=mailing.message.title,
@@ -31,23 +32,22 @@ def send_mailing():
         else:
             TryMailing.objects.create(mailing=mailing, status='success', response='Сообщение доставлено')
 
- # def send_mailing_plural():
- #        scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)
- #        scheduler.add_jobstore(DjangoJobStore(), "default")
- #
- #        scheduler.add_job(
- #            send_mailing,
- #            trigger=CronTrigger(second="*/59"),  # Every 10 seconds
- #            id="send_mailing",  # The `id` assigned to each job MUST be unique
- #            max_instances=1,
- #            replace_existing=True,
- #        )
- #
- #        try:
- #            #logger.info("Starting scheduler...")
- #            #TryMailing.objects.create(mailing=mailing, error=e, status='fail', response='Сообщение не доставлено')
- #            scheduler.start()
- #        except KeyboardInterrupt:
- #            #logger.info("Stopping scheduler...")
- #            scheduler.shutdown()
- #            #logger.info("Scheduler shut down successfully!")
+
+def send_mailing_plural():
+    scheduler = BackgroundScheduler(timezone=settings.TIME_ZONE)
+    scheduler.add_jobstore(DjangoJobStore(), "default")
+    mailing = Mailing()
+    trigger = get_mailing_period_trigger(mailing.pk)
+
+    scheduler.add_job(
+        send_mailing,
+        trigger=trigger,
+        id="send_mailing",
+        max_instances=1,
+        replace_existing=True,
+        )
+
+    try:
+        scheduler.start()
+    except KeyboardInterrupt:
+        scheduler.shutdown()

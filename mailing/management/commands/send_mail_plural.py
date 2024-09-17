@@ -9,7 +9,7 @@ from django_apscheduler import util
 from django.core.management import BaseCommand
 
 
-from mailing.task import send_mailing
+from mailing.task import send_mailing_plural
 
 from mailing.utils import get_mailing_period_trigger
 from mailing.models import Mailing
@@ -19,14 +19,18 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = "Runs APScheduler."
 
     def handle(self, *args, **options):
-        from mailing.receivers import delete_job, schedule_job, scheduler  # noqa: F401
+        send_mailing_plural()
 
-        if not scheduler.running:
-            scheduler.start()
-            logger.info('Scheduler started')
+    # help = "Runs APScheduler."
+    #
+    # def handle(self, *args, **options):
+    #     from mailing.receivers import delete_job, schedule_job, scheduler  # noqa: F401
+    #
+    #     if not scheduler.running:
+    #         scheduler.start()
+    #         logger.info('Scheduler started')
 
     # def handle(self, *args, **options):
     #     scheduler = BlockingScheduler(timezone=settings.TIME_ZONE)

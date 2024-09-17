@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.core.management import call_command
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from mailing.forms import MailingForm, ClientForm, MessageForm
 from mailing.models import Mailing, Client, Message
@@ -11,23 +12,30 @@ class HomePageView(TemplateView):
     template_name = "mailing/home.html"
 
 
-class MailingCreateView(CreateView):
+class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy('mailing:mailing_list')
 
+    def form_valid(self, form):
+        mailing = form.save()
+        user = self.request.user
+        mailing.user = user
+        mailing.save()
+        return super().form_valid(form)
+
     # def form_valid(self, form):
-    #     # form.instance.creator = self.request.user
+    #     # form.instance.creator = self.request.users
     #     # return super().form_valid()
     #
     #     product = form.save()
-    #     user = self.request.user
-    #     product.creator = user
+    #     users = self.request.users
+    #     product.creator = users
     #     product.save()
     #     return super().form_valid(form)
 
 
-class MailingUpdateView(UpdateView):
+class MailingUpdateView(LoginRequiredMixin, UpdateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy('mailing:mailing_list')
@@ -53,10 +61,10 @@ class MailingUpdateView(UpdateView):
     #         return self.render_to_response(self.get_context_data(form=form, formset=formset))
     #
     # def get_form_class(self):
-    #     user = self.request.user
-    #     if user == self.object.creator:
+    #     users = self.request.users
+    #     if users == self.object.creator:
     #         return ProductForm
-    #     if user.has_perm('catalog.can_edit_description') and user.has_perm('catalog.can_edit_category') and user.has_perm('catalog.can_edit_is_publication'):
+    #     if users.has_perm('catalog.can_edit_description') and users.has_perm('catalog.can_edit_category') and users.has_perm('catalog.can_edit_is_publication'):
     #         return ProductModeratorForm
     #     raise PermissionDenied
 
@@ -79,7 +87,7 @@ class MailingDetailView(DetailView):
     model = Mailing
 
 
-class MailingDeleteView(DeleteView):
+class MailingDeleteView(LoginRequiredMixin, DeleteView):
     model = Mailing
     success_url = reverse_lazy('mailing:mailing_list')
 
@@ -93,13 +101,20 @@ class ContactsPageView(TemplateView):
     template_name = "mailing/contacts.html"
 
 
-class ClientCreateView(CreateView):
+class ClientCreateView(LoginRequiredMixin, CreateView):
     model = Client
     form_class = ClientForm
     success_url = reverse_lazy('mailing:client_list')
 
+    def form_valid(self, form):
+        client = form.save()
+        user = self.request.user
+        client.user = user
+        client.save()
+        return super().form_valid(form)
 
-class ClientUpdateView(UpdateView):
+
+class ClientUpdateView(LoginRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
     success_url = reverse_lazy('mailing:client_list')
@@ -108,23 +123,39 @@ class ClientUpdateView(UpdateView):
 class ClientListView(ListView):
     model = Client
 
+    # def get_form_class(self):
+    #     user = self.request.user
+    #     if user == self.object.user:
+    #         return MailingForm
+    #     if user.has_perm('mailing.can_edit_is_active'):
+    #         return ProductModeratorForm
+    #     raise PermissionDenied
+
+
 
 # class ClientDetailView(DetailView):
 #     model = Client
 
 
-class ClientDeleteView(DeleteView):
+class ClientDeleteView(LoginRequiredMixin, DeleteView):
     model = Client
     success_url = reverse_lazy('mailing:client_list')
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('mailing:message_list')
 
+    def form_valid(self, form):
+        message = form.save()
+        user = self.request.user
+        message.user = user
+        message.save()
+        return super().form_valid(form)
 
-class MessageUpdateView(UpdateView):
+
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('mailing:message_list')
@@ -138,12 +169,12 @@ class MessageDetailView(DetailView):
     model = Message
 
 
-class MessageDeleteView(DeleteView):
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
     success_url = reverse_lazy('mailing:message_list')
 
 
-def toggle_activity(request, pk):
+def toggle_activity_mailing(request, pk):
     mailing_item = get_object_or_404(Mailing, pk=pk)
     if mailing_item.is_active:
         mailing_item.is_active = False
@@ -153,6 +184,18 @@ def toggle_activity(request, pk):
     mailing_item.save()
 
     return redirect(reverse('mailing:mailing_list'))
+
+
+def toggle_activity_client(request, pk):
+    client_item = get_object_or_404(Client, pk=pk)
+    if client_item.is_active:
+        client_item.is_active = False
+    else:
+        client_item.is_active = True
+
+    client_item.save()
+
+    return redirect(reverse('mailing:client_list'))
 
 
 def call_custom_command(request, command_id: int):

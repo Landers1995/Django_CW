@@ -5,8 +5,8 @@ from django.urls import path, include
 from mailing.apps import MailingConfig
 from mailing.views import HomePageView, ContactsPageView, MailingListView, MailingDetailView, MailingCreateView, \
     MailingUpdateView, MailingDeleteView, ClientListView, ClientCreateView, ClientDeleteView, ClientUpdateView, \
-    MessageCreateView, MessageDeleteView, MessageUpdateView, MessageListView, MessageDetailView, toggle_activity, \
-    call_custom_command
+    MessageCreateView, MessageDeleteView, MessageUpdateView, MessageListView, MessageDetailView, toggle_activity_mailing, \
+    call_custom_command, toggle_activity_client
 
 app_name = MailingConfig.name
 
@@ -31,7 +31,8 @@ urlpatterns = [
     path("message_edit/<int:pk>/", MessageUpdateView.as_view(), name="message_edit"),
     path("message_delete/<int:pk>/", MessageDeleteView.as_view(), name="message_delete"),
 
-    path("activity/<int:pk>/", toggle_activity, name="toggle_activity"),
+    path("activity/<int:pk>/mailing/", toggle_activity_mailing, name="toggle_activity_mailing"),
+    path("activity/<int:pk>/client/", toggle_activity_client, name="toggle_activity_client"),
     path("command/<int:command_id>/call/", call_custom_command, name="call_custom_command"),
 
  ]
