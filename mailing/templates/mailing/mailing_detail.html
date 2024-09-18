@@ -1,4 +1,4 @@
-{% extends 'mailing/home.html' %}
+{% extends 'blog/blog_list.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="container">
@@ -7,10 +7,10 @@
 
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">{{ mailing.client }}</h4>
+                    <h4 class="my-0 font-weight-normal">Тема рассылки: {{ mailing.message }}</h4>
                 </div>
                 <div class="card-body">
-                    <p class="text-start">Текст рассылки: {{ mailing.message | slice:100 }}</p>
+                    <p class="text-start">Текст рассылки: {{ mailing.message.body }}</p>
                     <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
                     <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
                     <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
@@ -30,7 +30,11 @@
                            role="button">Назад</a>
                     </div>
                 </div>
-                <p class="card-footer"> Активность: {{ mailing.is_active }}</p>
+                {% if mailing.is_active %}
+                <p class="card-footer"> Рассылка активна </p>
+                {% else %}
+                <p class="card-footer"> Рассылка неактивна </p>
+                {% endif %}
 
             </div>
         </div>

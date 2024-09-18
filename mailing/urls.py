@@ -11,7 +11,7 @@ from mailing.views import HomePageView, ContactsPageView, MailingListView, Maili
 app_name = MailingConfig.name
 
 urlpatterns = [
-    path("", HomePageView.as_view(), name="home"),
+    #path("", HomePageView.as_view(), name="home"),
     path("contacts/", ContactsPageView.as_view(), name="contacts"),
     path("mailing_list/", MailingListView.as_view(), name="mailing_list"),
     path("mailing/<int:pk>/", MailingDetailView.as_view(), name="mailing_detail"),

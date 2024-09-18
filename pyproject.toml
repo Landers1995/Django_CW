@@ -12,6 +12,7 @@ python-dotenv = "^1.0.1"
 psycopg2-binary = "^2.9.9"
 django-apscheduler = "^0.6.2"
 ipython = "^8.27.0"
+pillow = "^10.4.0"
 
 
 [build-system]

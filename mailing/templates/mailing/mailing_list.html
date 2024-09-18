@@ -1,4 +1,4 @@
-{% extends 'mailing/home.html' %}
+{% extends 'blog/blog_list.html' %}
 
 {% block content %}
 <div class="container">
@@ -16,10 +16,10 @@
             {% if mailing.is_active %}
             <div class="card border-success mb-4">
                 <div class="card-header text-success">
-                    <h4 class="my-0 font-weight-normal">{{ mailing.client }}</h4>
+                    <h4 class="my-0 font-weight-normal">Тема рассылки: {{ mailing.message }}</h4>
                 </div>
                 <div class="card-body text">
-                    <p class="text-start">Текст рассылки: {{ mailing.message | slice:100 }}</p>
+                    <p class="text-start">Текст рассылки: {{ mailing.message.body | slice:100 }}</p>
                     <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
                     <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
                     <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
@@ -38,15 +38,15 @@
                        role="button">Деактивировать</a>
                     {% endif %}
                 </div>
-                <p class="card-footer text-success"> Активность: {{ mailing.is_active }}</p>
+                <p class="card-footer text-success"> Рассылка активна </p>
             </div>
             {% else %}
             <div class="card border-warning mb-4">
                 <div class="card-header text-warning">
-                    <h4 class="my-0 font-weight-normal">{{ mailing.client }}</h4>
+                    <h4 class="my-0 font-weight-normal">Тема рассылки: {{ mailing.message }}</h4>
                 </div>
                 <div class="card-body text">
-                    <p class="text-start">Текст рассылки: {{ mailing.message | slice:100 }}</p>
+                    <p class="text-start">Текст рассылки: {{ mailing.message.body | slice:100 }}</p>
                     <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
                     <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
                     <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
@@ -65,7 +65,7 @@
                        role="button">Активировать</a>
                     {% endif %}
                 </div>
-                <p class="card-footer text-warning"> Активность: {{ mailing.is_active }}</p>
+                <p class="card-footer text-warning"> Рассылка неактивна</p>
             </div>
             {% endif %}
         </div>
