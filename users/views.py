@@ -10,6 +10,8 @@ from config.settings import EMAIL_HOST_USER
 from mailing.forms import StyleFormMixin
 from django.contrib.auth.views import PasswordResetView
 
+from django.contrib.auth.models import Group
+
 
 class UserCreateView(CreateView):
     model = User
@@ -19,6 +21,8 @@ class UserCreateView(CreateView):
     def form_valid(self, form):
         user = form.save()
         user.is_active = False
+        group = Group.objects.get(name='users')
+        user.groups.add(group)
         token = secrets.token_hex(16)
         user.token = token
         user.save()

@@ -20,10 +20,7 @@ class Client(models.Model):
         verbose_name_plural = "Клиенты"
         ordering = ("email",)
         permissions = [
-            ("can_view_clients", "can view clients"),
-            ("can_edit_is_active", "can edit active clients"),
-
-            ("can_delete_clients", "can delete clients"),
+            ("can_edit_is_active_client", "can edit active clients"),
         ]
 
     def __str__(self):
@@ -40,10 +37,6 @@ class Message(models.Model):
         verbose_name = "Сообщение"
         verbose_name_plural = "Сообщения"
         ordering = ("title",)
-        permissions = [
-            ("can_change_message", "can change message"),
-            ("can_delete_message", "can delete message"),
-        ]
 
     def __str__(self):
         return f"{self.title}"
@@ -84,12 +77,7 @@ class Mailing(models.Model):
         verbose_name_plural = "Рассылки"
         ordering = ("interval",)
         permissions = [
-            ("can_view_mailing", "can view mailing"),
-            ("can_edit_is_active", "can edit active mailing"),
-
-            ("can_change_mailing", "can change mailing"),
-            ("can_delete_mailing", "can delete mailing"),
-            ("can_create_mailing", "can create mailing"),
+            ("can_edit_is_active_mailing", "can edit active mailing"),
         ]
 
         def __str__(self):

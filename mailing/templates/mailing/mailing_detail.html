@@ -19,10 +19,13 @@
                     <p class="text-start">Статус рассылки: {{ mailing.status }}</p>
                     <h1 class="card-title pricing-card-title"></h1>
                     <div class="btn-group">
+                        {% if user == mailing.user %}
                         <a class="btn btn-sm btn-outline-secondary" href="{% url 'mailing:mailing_edit' mailing.pk %}"
                            role="button">Изменить</a>
+
                         <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:mailing_delete' mailing.pk %}"
                            role="button">Удалить</a>
+                        {% endif %}
                         <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:mailing_list' %}"
                            role="button">Назад</a>
                     </div>

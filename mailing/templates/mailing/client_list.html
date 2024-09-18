@@ -19,16 +19,20 @@
                     <p class="text-start">Комментарий: {{ client.comment }}</p>
                     <h1 class="card-title pricing-card-title"></h1>
                     <div class="btn-group">
+                        {% if user == client.user%}
                         <a class="btn btn-sm btn-outline-secondary" href="{% url 'mailing:client_edit' client.pk %}"
                            role="button">Изменить</a>
                         <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:client_delete' client.pk %}"
                            role="button">Удалить</a>
-                        {% if client.is_active %}
+                        {% endif %}
+                        {% if perms.mailing.can_edit_is_active or user == client.user%}
+                            {% if client.is_active %}
                         <a class="btn btn-sm btn-outline-warning" href="{% url 'mailing:toggle_activity_client' client.pk %}"
                            role="button">Деактивировать</a>
-                        {% else %}
+                            {% else %}
                         <a class="btn btn-sm btn-outline-success" href="{% url 'mailing:toggle_activity_client' client.pk %}"
                            role="button">Активировать</a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>
