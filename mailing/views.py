@@ -215,4 +215,6 @@ def call_custom_command(request, command_id: int):
     if request.method == 'POST':
         if command_id == 1:
             call_command('send_mail')
+        elif command_id == 2:
+            call_command('send_mail_plural')
     return redirect(reverse('mailing:mailing_list'))

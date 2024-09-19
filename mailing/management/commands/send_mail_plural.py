@@ -9,7 +9,7 @@ from django_apscheduler import util
 from django.core.management import BaseCommand
 
 
-from mailing.task import send_mailing_plural
+from mailing.task import select_mailings
 
 from mailing.utils import get_mailing_period_trigger
 from mailing.models import Mailing
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        send_mailing_plural()
+        select_mailings()
 
     # help = "Runs APScheduler."
     #

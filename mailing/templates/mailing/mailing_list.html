@@ -3,11 +3,11 @@
 {% block content %}
 <div class="container">
     <div class="row text-center">
-        {% if perms.mailing.add_mailing %}
+        {% if user.is_authenticated %}
         <a class="p-2 btn btn-outline-primary" href="{% url 'mailing:mailing_create' %}">Создать рассылку</a>
         {% endif %}
 
-        <div class="pb-4"></div>
+            <div class="pb-4"></div>
 
 
         {% for mailing in object_list %}
@@ -76,7 +76,7 @@
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">Выполнить единичную рассылку</button>
             </form>
-            <form method="POST" action="#">
+            <form method="POST" action="{% url 'mailing:call_custom_command' 2 %}">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">Запустить автоматическкую рассылку</button>
             </form>

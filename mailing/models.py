@@ -47,6 +47,7 @@ class Mailing(models.Model):
     client = models.ManyToManyField(Client, related_name='mailings', verbose_name='Клиент с почтой')
     message = models.ForeignKey(Message, related_name='mailings', verbose_name='Сообщение', on_delete=models.SET_NULL, **NULLABLE)
     send_date = models.DateField(**NULLABLE, verbose_name='Дата начала рассылки')
+    next_send_date = models.DateField(**NULLABLE, verbose_name='Дата повтора рассылки')
     create_date = models.DateField(auto_now_add=True, verbose_name='Дата создания рассылки')
     update_date = models.DateField(auto_now=True, verbose_name='Дата изменения рассылки')
     is_active = models.BooleanField(default=True)
@@ -60,7 +61,6 @@ class Mailing(models.Model):
     MONTH = "once a month"
     STATUS = [(COMPLETED, "completed"), (CREATED, "created"), (STARTED, "started")]
     INTERVAL = [
-        (MINUTE, "once a minute"),
         (DAY, "once a days"),
         (WEEK, "once a week"),
         (MONTH, "once a months"),
