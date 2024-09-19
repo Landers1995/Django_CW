@@ -3,7 +3,7 @@ from django.urls import path, include
 # from django.views.decorators.cache import cache_page
 
 from mailing.apps import MailingConfig
-from mailing.views import HomePageView, ContactsPageView, MailingListView, MailingDetailView, MailingCreateView, \
+from mailing.views import ContactsPageView, MailingListView, MailingDetailView, MailingCreateView, \
     MailingUpdateView, MailingDeleteView, ClientListView, ClientCreateView, ClientDeleteView, ClientUpdateView, \
     MessageCreateView, MessageDeleteView, MessageUpdateView, MessageListView, MessageDetailView, toggle_activity_mailing, \
     call_custom_command, toggle_activity_client
@@ -11,7 +11,7 @@ from mailing.views import HomePageView, ContactsPageView, MailingListView, Maili
 app_name = MailingConfig.name
 
 urlpatterns = [
-    #path("", HomePageView.as_view(), name="home"),
+    #path("", home, name="home"),
     path("contacts/", ContactsPageView.as_view(), name="contacts"),
     path("mailing_list/", MailingListView.as_view(), name="mailing_list"),
     path("mailing/<int:pk>/", MailingDetailView.as_view(), name="mailing_detail"),
