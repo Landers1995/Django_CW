@@ -69,7 +69,6 @@ class Mailing(models.Model):
     status = models.CharField(choices=STATUS, default=CREATED, verbose_name='Статус рассылки')
     interval = models.CharField(choices=INTERVAL, default=DAY, verbose_name='Интервал рассылки')
     end_date = models.DateTimeField(**NULLABLE, verbose_name="Дата окончания рассылки")
-    # auto_start = models.BooleanField(default=True, verbose_name="Автоматический старт")
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор рассылки", **NULLABLE)
 
     class Meta:

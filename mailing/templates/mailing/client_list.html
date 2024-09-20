@@ -25,7 +25,7 @@
                         <a class="btn btn-sm btn-outline-danger" href="{% url 'mailing:client_delete' client.pk %}"
                            role="button">Удалить</a>
                         {% endif %}
-                        {% if perms.mailing.can_edit_is_active or user == client.user%}
+                        {% if perms.mailing.can_edit_is_active_client or user == client.user%}
                             {% if client.is_active %}
                         <a class="btn btn-sm btn-outline-warning" href="{% url 'mailing:toggle_activity_client' client.pk %}"
                            role="button">Деактивировать</a>

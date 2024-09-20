@@ -21,11 +21,10 @@
                 <div class="card-body text">
                     <p class="text-start">Текст рассылки: {{ mailing.message.body | slice:100 }}</p>
                     <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
+                    <p class="text-start">Дата повтора рассылки: {{ mailing.next_send_date }}</p>
                     <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
                     <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
-                    <p class="text-start">Дата окончания рассылки: {{ mailing.end_date }}</p>
                     <p class="text-start">Интервал рассылки: {{ mailing.interval }}</p>
-                    <p class="text-start">Статус рассылки: {{ mailing.status }}</p>
                     <h1 class="card-title pricing-card-title"></h1>
                     <div class="btn-group">
                         <a class="btn btn-sm btn-outline-secondary"
@@ -48,11 +47,10 @@
                 <div class="card-body text">
                     <p class="text-start">Текст рассылки: {{ mailing.message.body | slice:100 }}</p>
                     <p class="text-start">Дата отправки рассылки: {{ mailing.send_date }}</p>
+                    <p class="text-start">Дата повтора рассылки: {{ mailing.next_send_date }}</p>
                     <p class="text-start">Дата создания рассылки: {{ mailing.create_date }}</p>
                     <p class="text-start">Дата обновления рассылки: {{ mailing.update_date }}</p>
-                    <p class="text-start">Дата окончания рассылки: {{ mailing.end_date }}</p>
                     <p class="text-start">Интервал рассылки: {{ mailing.interval }}</p>
-                    <p class="text-start">Статус рассылки: {{ mailing.status }}</p>
                     <h1 class="card-title pricing-card-title"></h1>
                     <div class="btn-group">
                         <a class="btn btn-sm btn-outline-secondary"
