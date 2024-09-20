@@ -78,7 +78,7 @@
             </form>
             <form method="POST" action="{% url 'mailing:call_custom_command' 2 %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Запустить автоматическкую рассылку</button>
+                <button type="submit" class="btn btn-primary">Запустить рассылку</button>
             </form>
             {% endif %}
         </div>

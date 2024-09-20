@@ -14,7 +14,6 @@ from django_apscheduler.models import DjangoJobExecution
 from django_apscheduler import util
 from django.core.management import BaseCommand
 #from mailing.task import send_mailing
-from mailing.utils import get_mailing_period_trigger
 
 
 def send_mailing():

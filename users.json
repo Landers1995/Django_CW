@@ -1,0 +1,96 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$HQoD63NuueIEd2UEpwAhyB$4sKuyLRq1ScZWl2D0rLFaIwAip94qtvO6ye62NR/vPg=",
+      "last_login": "2024-09-19T13:10:07.082Z",
+      "is_superuser": true,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-09-16T11:20:12.862Z",
+      "email": "admin@example.com",
+      "token": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$g60co0XTradbFUFLeb9xAA$0q2cray3h7FOl9H0FFcpLZ/GjpTyqVDsollLjfkQmjc=",
+      "last_login": "2024-09-19T18:35:12.958Z",
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-09-16T11:45:48Z",
+      "email": "il-travkin@yandex.ru",
+      "token": "20853ff43ef7d26a496be0fcef1d03e5",
+      "groups": [
+        1
+      ],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$7l4RERZQQYwNCMUEp2G2pi$boe2lqMnG6jOJcvElR8MHIBF3bOhAZwBwJ90vI7PxwU=",
+      "last_login": "2024-09-18T10:14:06.880Z",
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-17T13:25:06.834Z",
+      "email": "test@test.com",
+      "token": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 4,
+    "fields": {
+      "password": "",
+      "last_login": null,
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-18T10:52:34.769Z",
+      "email": "test2@test2.com",
+      "token": null,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$URSdG5FxAjJvT462Oyy0aq$AZMG1SoSdR+6z9BfA9tSmA3VJd1ScpphdCwEdYZF4S0=",
+      "last_login": "2024-09-18T11:04:06.836Z",
+      "is_superuser": false,
+      "first_name": "",
+      "last_name": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-09-18T10:53:46.282Z",
+      "email": "il-travkin95@mail.ru",
+      "token": "706b0bb831b1fcce9835ede3054fc37e",
+      "groups": [
+        2
+      ],
+      "user_permissions": []
+    }
+  }
+]
